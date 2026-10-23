@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { Capacitor } from '@capacitor/core';
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+import { Share } from '@capacitor/share';
 import { useData } from '../context/DataContext';
 import { fromDateStr, fmtDateFull, toDateStr } from '../utils/dateUtils';
 
@@ -82,13 +85,34 @@ export default function SettingsScreen() {
         </p>
 
         <button
-          onClick={() => {
+          onClick={async () => {
             const backup = { entries, settings, exportedAt: new Date().toISOString(), version: 1 };
-            const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+            const json = JSON.stringify(backup, null, 2);
+            const filename = `income-backup-${toDateStr(new Date())}.json`;
+
+            if (Capacitor.isNativePlatform()) {
+              try {
+                const { uri } = await Filesystem.writeFile({
+                  path: filename,
+                  data: json,
+                  directory: Directory.Cache,
+                  encoding: Encoding.UTF8,
+                });
+                await Share.share({ title: 'Income Tracker Backup', files: [uri] });
+              } catch (err) {
+                if (!String(err?.message).toLowerCase().includes('cancel')) {
+                  setImportStatus('✕ Export failed');
+                  setTimeout(() => setImportStatus(null), 4000);
+                }
+              }
+              return;
+            }
+
+            const blob = new Blob([json], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `income-backup-${toDateStr(new Date())}.json`;
+            a.download = filename;
             a.click();
             URL.revokeObjectURL(url);
           }}
