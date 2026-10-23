@@ -222,22 +222,30 @@ export default function CalendarScreen() {
         <div className="card-label">Year to Date — {today.getFullYear()}</div>
         <div className="big-amount">{fmtMoney(ytdTotals.total)}</div>
 
-        {ytdTotals.total > 0 ? (
+        {ytdTotals.total + ytdTotals.cashTips > 0 ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginTop: 8 }}>
-            <PieChart tips={ytdTotals.tips} commission={ytdTotals.commission} total={ytdTotals.total} />
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              <LegendItem
-                color="var(--tips)"
-                label="Tips"
-                amount={fmtMoney(ytdTotals.tips)}
-                pct={((ytdTotals.tips / ytdTotals.total) * 100).toFixed(1)}
-              />
+            <PieChart tips={ytdTotals.tips} commission={ytdTotals.commission} cashTips={ytdTotals.cashTips} />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               <LegendItem
                 color="var(--commission)"
                 label="Commission"
                 amount={fmtMoney(ytdTotals.commission)}
-                pct={((ytdTotals.commission / ytdTotals.total) * 100).toFixed(1)}
+                pct={pctOf(ytdTotals.commission, ytdTotals)}
               />
+              <LegendItem
+                color="var(--tips)"
+                label="Tips"
+                amount={fmtMoney(ytdTotals.tips)}
+                pct={pctOf(ytdTotals.tips, ytdTotals)}
+              />
+              {ytdTotals.cashTips > 0 && (
+                <LegendItem
+                  color="var(--cash)"
+                  label="Cash Tips"
+                  amount={fmtMoney(ytdTotals.cashTips)}
+                  pct={pctOf(ytdTotals.cashTips, ytdTotals)}
+                />
+              )}
             </div>
           </div>
         ) : (
@@ -370,12 +378,19 @@ export default function CalendarScreen() {
   );
 }
 
-function PieChart({ tips, commission, total }) {
-  const tipsPct = (tips / total) * 100;
+function pctOf(value, totals) {
+  const all = totals.total + totals.cashTips;
+  return all > 0 ? ((value / all) * 100).toFixed(1) : '0.0';
+}
+
+function PieChart({ tips, commission, cashTips }) {
+  const all = tips + commission + cashTips;
+  const a = (commission / all) * 100;
+  const b = a + (tips / all) * 100;
   return (
     <div style={{
       width: 100, height: 100, borderRadius: '50%', flexShrink: 0,
-      background: `conic-gradient(var(--tips) 0% ${tipsPct}%, var(--commission) ${tipsPct}% 100%)`,
+      background: `conic-gradient(var(--commission) 0% ${a}%, var(--tips) ${a}% ${b}%, var(--cash) ${b}% 100%)`,
     }} />
   );
 }
