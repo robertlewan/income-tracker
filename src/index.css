@@ -1,0 +1,47 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary: #7C3AED;
+  --primary-light: #EDE9FE;
+  --tips: #0EA5E9;
+  --tips-light: #E0F2FE;
+  --commission: #10B981;
+  --commission-light: #D1FAE5;
+  --bg: #F5F5F7;
+  --card: #FFFFFF;
+  --text: #1C1C1E;
+  --text2: #3A3A3C;
+  --text3: #8E8E93;
+  --border: #E5E5EA;
+  --cash: #F59E0B;
+  --cash-light: #FEF3C7;
+  --danger: #EF4444;
+  --safe-top: env(safe-area-inset-top, 44px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --tab-h: 60px;
+}
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, input {
+  font-family: inherit;
+}
+
+input[type="date"] {
+  color-scheme: light;
+}

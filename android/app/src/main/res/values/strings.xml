@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Income Tracker</string>
+    <string name="title_activity_main">Income Tracker</string>
+    <string name="package_name">com.incometracker.app</string>
+    <string name="custom_url_scheme">com.incometracker.app</string>
+</resources>

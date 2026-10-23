@@ -1,0 +1,229 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;    /* fallback */
+  height: 100svh;   /* iOS Safari: always the visible area, never cut off by browser bars */
+  overflow: hidden;
+  padding-top: var(--safe-top);
+}
+
+.screen-wrap {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+/* ── Shared screen layout ── */
+.screen-content {
+  padding: 16px;
+  padding-bottom: 28px;
+}
+
+/* ── Card ── */
+.card {
+  background: var(--card);
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 10px rgba(0,0,0,0.04);
+}
+
+.card-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  margin-bottom: 12px;
+}
+
+/* ── Big amount ── */
+.big-amount {
+  font-size: 44px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -1.5px;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+/* ── Split row (tips vs commission) ── */
+.split-row {
+  display: flex;
+  align-items: center;
+}
+.split-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.split-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--border);
+}
+.split-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-bottom: 2px;
+}
+.split-label {
+  font-size: 12px;
+  color: var(--text3);
+}
+.split-amount {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+/* ── Input ── */
+.input-group { margin-bottom: 14px; }
+
+.input-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+
+.input-field {
+  display: flex;
+  align-items: center;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 13px;
+  padding: 0 14px;
+  height: 52px;
+  transition: border-color 0.15s;
+}
+.input-field:focus-within { border-color: var(--primary); }
+
+.currency-sym {
+  font-size: 18px;
+  color: var(--text3);
+  margin-right: 4px;
+  user-select: none;
+}
+
+.input-field input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  outline: none;
+  min-width: 0;
+}
+.input-field input::placeholder {
+  color: var(--border);
+  font-weight: 400;
+}
+
+/* ── Primary button ── */
+.btn-primary {
+  display: block;
+  width: 100%;
+  background: var(--primary);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.12s, transform 0.1s;
+}
+.btn-primary:active { opacity: 0.82; transform: scale(0.98); }
+
+/* ── Entry rows ── */
+.entry-row {
+  display: flex;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px solid #F2F2F7;
+  gap: 10px;
+}
+.entry-row:last-child { border-bottom: none; padding-bottom: 0; }
+.entry-idx { font-size: 13px; color: var(--text3); min-width: 24px; }
+.entry-breakdown { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.entry-type { font-size: 13px; font-weight: 600; }
+.entry-total { font-size: 16px; font-weight: 700; color: var(--text); }
+.delete-btn {
+  width: 28px; height: 28px; border-radius: 14px;
+  background: #FEE2E2;
+  display: flex; align-items: center; justify-content: center;
+  border: none; cursor: pointer; flex-shrink: 0;
+  font-size: 11px; color: var(--danger); font-weight: 700;
+}
+
+/* ── Toggle group ── */
+.toggle-group {
+  display: flex;
+  background: #E5E5EA;
+  border-radius: 11px;
+  padding: 3px;
+}
+.toggle-btn {
+  flex: 1;
+  padding: 8px 4px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text3);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.toggle-btn.active {
+  background: var(--card);
+  color: var(--text);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+}
+
+/* ── Period nav buttons ── */
+.nav-btn {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 2px;
+}
+.nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+/* ── Tab bar ── */
+.tab-bar {
+  display: flex;
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  height: calc(var(--tab-h) + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
+  flex-shrink: 0;
+}
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: var(--text3);
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding-top: 8px;
+  transition: color 0.12s;
+}
+.tab-item.active { color: var(--primary); }
+.tab-item span { font-size: 10px; font-weight: 600; letter-spacing: 0.2px; }
